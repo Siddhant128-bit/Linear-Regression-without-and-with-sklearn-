@@ -1,6 +1,8 @@
 import pandas as pd 
 import numpy as np 
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
 import pickle
 
 def load_data():
@@ -29,11 +31,10 @@ def train_linear_model(dataset):
     
     X=np.array(X[X.columns])
     Y=np.array(Y.to_list()).reshape(-1,1)
-    
-    #Y=np.array(dataset['Height']).reshape(-1,1)
-    #X=np.array(dataset['Weight']).reshape(-1,1)
-    reg=LinearRegression().fit(X,Y)
-    print(reg.score(X,Y))
+    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
+
+    reg=LinearRegression().fit(X_train,y_train)
+    print(reg.score(X_test,y_test))
     return reg
 
 if __name__=="__main__":
